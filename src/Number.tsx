@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 const Container = styled.span<{isBlue: boolean}>`
-  background-color: ${props => (props.isBlue ? 'blue' : 'blank')};
+  background-color: ${props =>
+    props.isBlue ? props.theme.blueColor : 'green'};
+  color: ${props => (props.isBlue ? 'blue' : props.theme.blueColor)};
 `;
 
 interface IProps {
