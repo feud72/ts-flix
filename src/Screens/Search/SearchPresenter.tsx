@@ -6,6 +6,7 @@ interface IProps {
   searchTerm: string;
   loading: boolean;
   error: string;
+  handleSubmit: () => void;
 }
 
 const Search: React.FC<IProps> = ({
@@ -14,6 +15,7 @@ const Search: React.FC<IProps> = ({
   searchTerm,
   loading,
   error,
+  handleSubmit,
 }) => {
   return <div>Search</div>;
 };
