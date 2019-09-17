@@ -1,7 +1,8 @@
 import React from 'react';
+import styled from "styled-components";
 
 interface IProps {
-  result: object[];
+  result: object;
   loading: boolean;
   error: string;
 }

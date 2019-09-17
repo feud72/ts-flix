@@ -4,7 +4,7 @@ import DetailPresenter from './DetailPresenter';
 import {moviesApi, tvApi} from '../../Api';
 
 interface IState {
-  result: object[];
+  result: object;
   error: string;
   loading: boolean;
   isMovie: boolean;
@@ -37,7 +37,7 @@ export default class extends React.Component<IProps, IState> {
     if (isNaN(parsedId)) {
       return push('/');
     }
-    let result = [];
+    let result = {};
     try {
       if (isMovie) {
         ({data: result} = await moviesApi.movieDetail(parsedId));
