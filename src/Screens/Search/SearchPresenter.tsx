@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 
 interface IProps {
-  movieResults: object[];
-  tvResults: object[];
+  movieResults?: null | any[];
+  tvResults?: null | any[];
   searchTerm: string;
   loading: boolean;
-  error: string;
+  error: null | string;
   handleSubmit: () => void;
 }
 
@@ -16,7 +16,7 @@ const Search: React.FC<IProps> = ({
   searchTerm,
   loading,
   error,
-  handleSubmit,
+  handleSubmit
 }) => {
   return <div>Search</div>;
 };

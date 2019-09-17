@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import Section from '../../Components/Section';
+import React from "react";
+import styled from "styled-components";
+import Section from "../../Components/Section";
 
 const Container = styled.div`
   padding: 0px 10px;
 `;
 
 interface IProps {
-  nowPlaying: object[];
-  upcoming: object[];
-  popular: object[];
+  nowPlaying?: null | any[];
+  upcoming?: null | any[];
+  popular?: null | any[];
   loading: boolean;
-  error: string;
+  error: null | string;
 }
 
 const HomePresenter: React.FC<IProps> = ({
@@ -19,10 +19,10 @@ const HomePresenter: React.FC<IProps> = ({
   upcoming,
   popular,
   loading,
-  error,
+  error
 }) => {
   return loading ? (
-    ''
+    <div></div>
   ) : (
     <Container>
       {nowPlaying && nowPlaying.length > 0 && (
@@ -31,10 +31,14 @@ const HomePresenter: React.FC<IProps> = ({
         </Section>
       )}
       {upcoming && upcoming.length > 0 && (
-        <Section title="Upcoming">{upcoming.map(movie => movie.title)}</Section>
+        <Section title="Upcoming Movies">
+          {upcoming.map(movie => movie.title)}
+        </Section>
       )}
       {popular && popular.length > 0 && (
-        <Section title="Popular">{popular.map(movie => movie.title)}</Section>
+        <Section title="Popular Movies">
+          {popular.map(movie => movie.title)}
+        </Section>
       )}
     </Container>
   );

@@ -1,53 +1,53 @@
-import React from 'react';
-import TVPresenter from './TVPresenter';
-import {tvApi} from '../../Api';
+import React from "react";
+import TVPresenter from "./TVPresenter";
+import { tvApi } from "../../Api";
 
 interface IState {
-  topRated: object[];
-  popular: object[];
-  airingToday: object[];
+  topRated?: null | any[];
+  popular?: null | any[];
+  airingToday?: null | any[];
   loading: boolean;
-  error: string;
+  error: null | string;
 }
 
 export default class extends React.Component {
   state: IState = {
-    topRated: [],
-    popular: [],
-    airingToday: [],
+    topRated: null,
+    popular: null,
+    airingToday: null,
     loading: true,
-    error: '',
+    error: null
   };
 
   async componentDidMount() {
     try {
       const {
-        data: {results: topRated},
+        data: { results: topRated }
       } = await tvApi.topRated();
       const {
-        data: {results: popular},
+        data: { results: popular }
       } = await tvApi.popular();
       const {
-        data: {results: airingToday},
+        data: { results: airingToday }
       } = await tvApi.airingToday();
       this.setState({
         topRated,
         popular,
-        airingToday,
+        airingToday
       });
     } catch (e) {
       this.setState({
-        error: e.message,
+        error: e.message
       });
     } finally {
       this.setState({
-        loading: false,
+        loading: false
       });
     }
   }
 
   render() {
-    const {topRated, popular, airingToday, loading, error} = this.state;
+    const { topRated, popular, airingToday, loading, error } = this.state;
     return (
       <TVPresenter
         topRated={topRated}

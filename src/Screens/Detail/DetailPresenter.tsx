@@ -1,17 +1,13 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 
 interface IProps {
-  result: object;
+  result?: null | any;
   loading: boolean;
-  error: string;
+  error: null | string;
 }
 
-const DetailPresenter: React.FC<IProps> = ({
-  result,
-  loading,
-  error,
-}) => {
+const DetailPresenter: React.FC<IProps> = ({ result, loading, error }) => {
   return <div>Detail</div>;
 };
 

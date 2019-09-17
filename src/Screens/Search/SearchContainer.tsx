@@ -1,60 +1,60 @@
-import React from 'react';
-import SearchPresenter from './SearchPresenter';
-import {moviesApi, tvApi} from '../../Api';
+import React from "react";
+import SearchPresenter from "./SearchPresenter";
+import { moviesApi, tvApi } from "../../Api";
 
 interface IState {
-  movieResults: object[];
-  tvResults: object[];
+  movieResults?: null | any[];
+  tvResults?: null | any[];
   searchTerm: string;
   loading: boolean;
-  error: string;
+  error: null | string;
 }
 
 export default class extends React.Component {
   state: IState = {
-    movieResults: [],
-    tvResults: [],
-    searchTerm: '',
+    movieResults: null,
+    tvResults: null,
+    searchTerm: "",
     loading: false,
-    error: '',
+    error: null
   };
 
   handleSubmit = () => {
-    const {searchTerm} = this.state;
-    if (searchTerm !== '') {
+    const { searchTerm } = this.state;
+    if (searchTerm !== "") {
       this.searchByTerm();
     }
   };
 
   searchByTerm = async () => {
     this.setState({
-      loading: true,
+      loading: true
     });
-    const {searchTerm} = this.state;
+    const { searchTerm } = this.state;
     try {
       const {
-        data: {results: movieResults},
+        data: { results: movieResults }
       } = await moviesApi.search(searchTerm);
       const {
-        data: {results: showResults},
+        data: { results: showResults }
       } = await tvApi.search(searchTerm);
       this.setState({
         movieResults,
-        showResults,
+        showResults
       });
     } catch (e) {
       this.setState({
-        error: e.message,
+        error: e.message
       });
     } finally {
       this.setState({
-        loading: false,
+        loading: false
       });
     }
   };
 
   render() {
-    const {movieResults, tvResults, searchTerm, loading, error} = this.state;
+    const { movieResults, tvResults, searchTerm, loading, error } = this.state;
     return (
       <SearchPresenter
         movieResults={movieResults}

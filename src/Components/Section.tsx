@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Container = styled.div`
   :not(:last-child) {
@@ -19,10 +19,10 @@ const Grid = styled.div`
 
 interface IProps {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-const Section: React.FC<IProps> = ({title, children}) => {
+const Section: React.FC<IProps> = ({ title, children }) => {
   return (
     <Container>
       <Title>{title}</Title>
