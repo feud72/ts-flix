@@ -1,7 +1,7 @@
-import React from "react";
-import { RouteComponentProps } from "react-router-dom";
-import DetailPresenter from "./DetailPresenter";
-import { moviesApi, tvApi } from "../../Api";
+import React from 'react';
+import {RouteComponentProps} from 'react-router-dom';
+import DetailPresenter from './DetailPresenter';
+import {moviesApi, tvApi} from '../../Api';
 
 interface IState {
   result?: null | any;
@@ -16,48 +16,48 @@ export default class extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     const {
-      location: { pathname }
+      location: {pathname},
     } = props;
     this.state = {
       result: null,
       error: null,
       loading: true,
-      isMovie: pathname.includes("/movie/")
+      isMovie: pathname.includes('/movie/'),
     };
   }
   async componentDidMount() {
     const {
       match: {
-        params: { id }
+        params: {id},
       },
-      history: { push }
+      history: {push},
     } = this.props;
-    const { isMovie } = this.state;
+    const {isMovie} = this.state;
     const parsedId = parseInt(id);
     if (isNaN(parsedId)) {
-      return push("/");
+      return push('/');
     }
     let result = {};
     try {
       if (isMovie) {
-        ({ data: result } = await moviesApi.movieDetail(parsedId));
+        ({data: result} = await moviesApi.movieDetail(parsedId));
       } else {
-        ({ data: result } = await tvApi.showDetail(parsedId));
+        ({data: result} = await tvApi.showDetail(parsedId));
       }
     } catch (e) {
       this.setState({
-        error: e.message
+        error: "Can't find anything.",
       });
     } finally {
       this.setState({
         loading: false,
-        result
+        result,
       });
     }
   }
 
   render() {
-    const { result, error, loading } = this.state;
+    const {result, error, loading} = this.state;
     return <DetailPresenter result={result} error={error} loading={loading} />;
   }
 }

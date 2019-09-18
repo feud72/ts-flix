@@ -2,9 +2,19 @@ import React from 'react';
 import SearchPresenter from './SearchPresenter';
 import {moviesApi, tvApi} from '../../Api';
 
+interface IShow {
+  name: string;
+  id: number;
+}
+
+interface IMovie {
+  id: number;
+  title: string;
+}
+
 interface IState {
-  movieResults?: null | Array<any>;
-  tvResults?: null | Array<any>;
+  movieResults: null | Array<IMovie>;
+  tvResults: null | Array<IShow>;
   searchTerm: string;
   loading: boolean;
   error: null | string;
@@ -28,11 +38,13 @@ export default class extends React.Component {
   };
 
   updateTerm = (event: React.FormEvent<HTMLInputElement>): void => {
-		const { currentTarget : { value } } = event;
-		this.setState({
-			searchTerm: value
-		})
-	};
+    const {
+      currentTarget: {value},
+    } = event;
+    this.setState({
+      searchTerm: value,
+    });
+  };
 
   searchByTerm = async () => {
     this.setState({
@@ -50,9 +62,10 @@ export default class extends React.Component {
         movieResults,
         tvResults,
       });
+//      throw Error(); <=  이 부분이 없으면 에러 메세지가 뜨지 않습니다. 
     } catch (e) {
       this.setState({
-        error: e.message,
+        error: "Can't find results.",
       });
     } finally {
       this.setState({
@@ -71,7 +84,7 @@ export default class extends React.Component {
         loading={loading}
         error={error}
         handleSubmit={this.handleSubmit}
-			  updateTerm={this.updateTerm}
+        updateTerm={this.updateTerm}
       />
     );
   }
