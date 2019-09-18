@@ -1,16 +1,21 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
-import Section from "../../Components/Section";
-import Loader from "../../Components/Loader";
+import React from 'react';
+import styled from 'styled-components';
+import Section from '../../Components/Section';
+import Loader from '../../Components/Loader';
 
 const Container = styled.div`
   padding: 0px 10px;
 `;
 
+interface IShow {
+  name: string;
+  id: number;
+}
+
 interface IProps {
-  topRated?: null | any[];
-  popular?: null | any[];
-  airingToday?: null | any[];
+  topRated?: null | Array<IShow>;
+  popular?: null | Array<IShow>;
+  airingToday?: null | Array<IShow>;
   loading: boolean;
   error: null | string;
 }
@@ -20,7 +25,7 @@ const TVPresenter: React.FC<IProps> = ({
   popular,
   airingToday,
   loading,
-  error
+  error,
 }) => {
   return loading ? (
     <Loader />

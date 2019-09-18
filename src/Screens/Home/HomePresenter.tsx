@@ -1,16 +1,21 @@
-import React from "react";
-import styled from "styled-components";
-import Section from "../../Components/Section";
-import Loader from "../../Components/Loader";
+import React from 'react';
+import styled from 'styled-components';
+import Section from '../../Components/Section';
+import Loader from '../../Components/Loader';
 
 const Container = styled.div`
   padding: 0px 10px;
 `;
 
+interface IMovie {
+  id: number;
+  title: string;
+}
+
 interface IProps {
-  nowPlaying?: null | any[];
-  upcoming?: null | any[];
-  popular?: null | any[];
+  nowPlaying?: null | Array<IMovie>;
+  upcoming?: null | Array<IMovie>;
+  popular?: null | Array<IMovie>;
   loading: boolean;
   error: null | string;
 }
@@ -20,7 +25,7 @@ const HomePresenter: React.FC<IProps> = ({
   upcoming,
   popular,
   loading,
-  error
+  error,
 }) => {
   return loading ? (
     <Loader />

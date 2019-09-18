@@ -1,11 +1,11 @@
-import React from "react";
-import HomePresenter from "./HomePresenter";
-import { moviesApi } from "../../Api";
+import React from 'react';
+import HomePresenter from './HomePresenter';
+import {moviesApi} from '../../Api';
 
 interface IState {
-  nowPlaying: null | any[];
-  upcoming: null | any[];
-  popular: null | any[];
+  nowPlaying: null | Array<any>;
+  upcoming: null | Array<any>;
+  popular: null | Array<any>;
   error: null | string;
   loading: boolean;
 }
@@ -16,38 +16,38 @@ export default class extends React.Component {
     upcoming: null,
     popular: null,
     error: null,
-    loading: true
+    loading: true,
   };
 
   async componentDidMount() {
     try {
       const {
-        data: { results: nowPlaying }
+        data: {results: nowPlaying},
       } = await moviesApi.nowPlaying();
       const {
-        data: { results: upcoming }
+        data: {results: upcoming},
       } = await moviesApi.upcoming();
       const {
-        data: { results: popular }
+        data: {results: popular},
       } = await moviesApi.popular();
       this.setState({
         nowPlaying,
         upcoming,
-        popular
+        popular,
       });
     } catch (e) {
       this.setState({
-        error: e.message
+        error: e.message,
       });
     } finally {
       this.setState({
-        loading: false
+        loading: false,
       });
     }
   }
 
   render() {
-    const { nowPlaying, upcoming, popular, error, loading } = this.state;
+    const {nowPlaying, upcoming, popular, error, loading} = this.state;
     return (
       <HomePresenter
         nowPlaying={nowPlaying}
