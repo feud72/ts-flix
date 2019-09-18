@@ -30,11 +30,11 @@ interface IMovie {
 }
 
 interface IProps {
-  movieResults?: null | Array<IMovie>;
-  tvResults?: null | Array<IShow>;
+  movieResults: Array<IMovie>;
+  tvResults: Array<IShow>;
   searchTerm: string;
   loading: boolean;
-  error: null | string;
+  error: string;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   updateTerm: (event: React.FormEvent<HTMLInputElement>) => void;
 }
@@ -78,7 +78,7 @@ const Search: React.FC<IProps> = ({
           )}
         </>
       )}
-      {error && <Error text={error} />}
+      {error.length > 0 && <Error text={error} />}
     </Container>
   );
 };

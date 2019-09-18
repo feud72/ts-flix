@@ -2,25 +2,33 @@ import React from 'react';
 import HomePresenter from './HomePresenter';
 import {moviesApi} from '../../Api';
 
+interface IMovie {
+  title: string;
+  id: number;
+}
+
 interface IState {
-  nowPlaying: null | Array<any>;
-  upcoming: null | Array<any>;
-  popular: null | Array<any>;
-  error: null | string;
+  nowPlaying: Array<IMovie>;
+  upcoming: Array<IMovie>;
+  popular: Array<IMovie>;
+  error: string;
   loading: boolean;
 }
 
 export default class extends React.Component {
   state: IState = {
-    nowPlaying: null,
-    upcoming: null,
-    popular: null,
-    error: null,
+    nowPlaying: [],
+    upcoming: [],
+    popular: [],
+    error: "",
     loading: true,
   };
 
   async componentDidMount() {
     try {
+      this.setState({
+        error: ""
+      });
       const {
         data: {results: nowPlaying},
       } = await moviesApi.nowPlaying();
@@ -35,6 +43,9 @@ export default class extends React.Component {
         upcoming,
         popular,
       });
+      if (nowPlaying.length === 0 && popular.length === 0 && upcoming.length === 0) {
+        throw Error();
+      }
     } catch (e) {
       this.setState({
         error: "Can't find movie information.",

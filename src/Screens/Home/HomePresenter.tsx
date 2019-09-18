@@ -14,11 +14,11 @@ interface IMovie {
 }
 
 interface IProps {
-  nowPlaying?: null | Array<IMovie>;
-  upcoming?: null | Array<IMovie>;
-  popular?: null | Array<IMovie>;
+  nowPlaying: Array<IMovie>;
+  upcoming: Array<IMovie>;
+  popular: Array<IMovie>;
   loading: boolean;
-  error: null | string;
+  error: string;
 }
 
 const HomePresenter: React.FC<IProps> = ({
@@ -53,7 +53,7 @@ const HomePresenter: React.FC<IProps> = ({
           ))}
         </Section>
       )}
-      {error && <Error text={error} />}
+      {error.length > 0 && <Error text={error} />}
     </Container>
   );
 };

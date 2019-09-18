@@ -2,25 +2,33 @@ import React from 'react';
 import TVPresenter from './TVPresenter';
 import {tvApi} from '../../Api';
 
+interface IShow {
+  name: string;
+  id: number;
+}
+
 interface IState {
-  topRated?: null | Array<any>;
-  popular?: null | Array<any>;
-  airingToday?: null | Array<any>;
+  topRated: Array<IShow>;
+  popular: Array<IShow>;
+  airingToday: Array<IShow>;
   loading: boolean;
-  error: null | string;
+  error: string;
 }
 
 export default class extends React.Component {
   state: IState = {
-    topRated: null,
-    popular: null,
-    airingToday: null,
+    topRated: [],
+    popular: [],
+    airingToday: [],
     loading: true,
-    error: null,
+    error: "",
   };
 
   async componentDidMount() {
     try {
+      this.setState({
+        error: ""
+      });
       const {
         data: {results: topRated},
       } = await tvApi.topRated();
@@ -35,6 +43,9 @@ export default class extends React.Component {
         popular,
         airingToday,
       });
+      if (topRated.length === 0 && popular.length === 0 && airingToday.length === 0) {
+        throw Error();
+      }
     } catch (e) {
       this.setState({
         error: "Can't find TV information",

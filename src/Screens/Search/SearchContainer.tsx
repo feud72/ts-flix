@@ -13,20 +13,20 @@ interface IMovie {
 }
 
 interface IState {
-  movieResults: null | Array<IMovie>;
-  tvResults: null | Array<IShow>;
+  movieResults: Array<IMovie>;
+  tvResults: Array<IShow>;
   searchTerm: string;
   loading: boolean;
-  error: null | string;
+  error: string;
 }
 
 export default class extends React.Component {
   state: IState = {
-    movieResults: null,
-    tvResults: null,
+    movieResults: [],
+    tvResults: [],
     searchTerm: '',
     loading: false,
-    error: null,
+    error: "",
   };
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -52,6 +52,9 @@ export default class extends React.Component {
     });
     const {searchTerm} = this.state;
     try {
+			this.setState({
+				error: ""
+			})
       const {
         data: {results: movieResults},
       } = await moviesApi.search(searchTerm);
@@ -62,7 +65,9 @@ export default class extends React.Component {
         movieResults,
         tvResults,
       });
-//      throw Error(); <=  이 부분이 없으면 에러 메세지가 뜨지 않습니다. 
+      if (movieResults.length === 0 && tvResults.length === 0) {
+        throw Error();
+      }
     } catch (e) {
       this.setState({
         error: "Can't find results.",

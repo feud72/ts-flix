@@ -14,11 +14,11 @@ interface IShow {
 }
 
 interface IProps {
-  topRated?: null | Array<IShow>;
-  popular?: null | Array<IShow>;
-  airingToday?: null | Array<IShow>;
+  topRated: Array<IShow>;
+  popular: Array<IShow>;
+  airingToday: Array<IShow>;
   loading: boolean;
-  error: null | string;
+  error: string;
 }
 
 const TVPresenter: React.FC<IProps> = ({
@@ -53,7 +53,7 @@ const TVPresenter: React.FC<IProps> = ({
           ))}
         </Section>
       )}
-      {error && <Error text={error} />}
+      {error.length >0 && <Error text={error} />}
     </Container>
   );
 };
