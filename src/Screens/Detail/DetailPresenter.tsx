@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Error from '../../Components/Error';
+import Message from '../../Components/Message';
 
 interface IProps {
   result?: null | any;
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const DetailPresenter: React.FC<IProps> = ({result, loading, error}) => {
-  return <div>{error && <Error text={error} />}</div>;
+  return <div>{error && <Message color="#e74c3c" text={error} />}</div>;
 };
 
 export default DetailPresenter;

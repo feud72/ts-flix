@@ -8,17 +8,17 @@ const Container = styled.div`
 `;
 
 const Text = styled.span`
-  color: #e74c3c;
-  font-weight: 600;
+  color: ${props => props.color};
 `;
 
 interface IProps {
   text: string;
+  color: string;
 }
-const Error: React.FC<IProps> = ({text}) => (
+const Message: React.FC<IProps> = ({text, color}) => (
   <Container>
-    <Text>{text}</Text>
+    <Text color={color}>{text}</Text>
   </Container>
 );
 
-export default Error;
+export default Message;
