@@ -1,10 +1,14 @@
-import React from 'react';
-import HomePresenter from './HomePresenter';
-import {moviesApi} from '../../Api';
+import React from "react";
+import HomePresenter from "./HomePresenter";
+import { moviesApi } from "../../Api";
 
 interface IMovie {
-  title: string;
   id: number;
+  title: string;
+  poster_path: string;
+  original_title: string;
+  vote_average: number;
+  release_date: string;
 }
 
 interface IState {
@@ -21,7 +25,7 @@ export default class extends React.Component {
     upcoming: [],
     popular: [],
     error: "",
-    loading: true,
+    loading: true
   };
 
   async componentDidMount() {
@@ -30,35 +34,39 @@ export default class extends React.Component {
         error: ""
       });
       const {
-        data: {results: nowPlaying},
+        data: { results: nowPlaying }
       } = await moviesApi.nowPlaying();
       const {
-        data: {results: upcoming},
+        data: { results: upcoming }
       } = await moviesApi.upcoming();
       const {
-        data: {results: popular},
+        data: { results: popular }
       } = await moviesApi.popular();
       this.setState({
         nowPlaying,
         upcoming,
-        popular,
+        popular
       });
-      if (nowPlaying.length === 0 && popular.length === 0 && upcoming.length === 0) {
+      if (
+        nowPlaying.length === 0 &&
+        popular.length === 0 &&
+        upcoming.length === 0
+      ) {
         throw Error();
       }
     } catch (e) {
       this.setState({
-        error: "Can't find movie information.",
+        error: "Can't find movie information."
       });
     } finally {
       this.setState({
-        loading: false,
+        loading: false
       });
     }
   }
 
   render() {
-    const {nowPlaying, upcoming, popular, error, loading} = this.state;
+    const { nowPlaying, upcoming, popular, error, loading } = this.state;
     return (
       <HomePresenter
         nowPlaying={nowPlaying}

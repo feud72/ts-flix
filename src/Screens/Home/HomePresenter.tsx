@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import Section from '../../Components/Section';
-import Loader from '../../Components/Loader';
-import Message from '../../Components/Message';
+import React from "react";
+import styled from "styled-components";
+import Section from "../../Components/Section";
+import Loader from "../../Components/Loader";
+import Message from "../../Components/Message";
+import Poster from "../../Components/Poster";
 
 const Container = styled.div`
   padding: 0px 10px;
@@ -11,6 +12,10 @@ const Container = styled.div`
 interface IMovie {
   id: number;
   title: string;
+  poster_path: string;
+  original_title: string;
+  vote_average: number;
+  release_date: string;
 }
 
 interface IProps {
@@ -26,7 +31,7 @@ const HomePresenter: React.FC<IProps> = ({
   upcoming,
   popular,
   loading,
-  error,
+  error
 }) => {
   return loading ? (
     <Loader />
@@ -35,21 +40,45 @@ const HomePresenter: React.FC<IProps> = ({
       {nowPlaying && nowPlaying.length > 0 && (
         <Section title="Now Playing">
           {nowPlaying.map(movie => (
-            <span key={movie.id}>{movie.title}</span>
+            <Poster
+              key={movie.id}
+              id={movie.id}
+              imageUrl={movie.poster_path}
+              title={movie.original_title}
+              rating={movie.vote_average}
+              year={movie.release_date.substring(0, 4)}
+              isMovie={true}
+            />
           ))}
         </Section>
       )}
       {upcoming && upcoming.length > 0 && (
         <Section title="Upcoming Movies">
           {upcoming.map(movie => (
-            <span key={movie.id}>{movie.title}</span>
+            <Poster
+              key={movie.id}
+              id={movie.id}
+              imageUrl={movie.poster_path}
+              title={movie.original_title}
+              rating={movie.vote_average}
+              year={movie.release_date.substring(0, 4)}
+              isMovie={true}
+            />
           ))}
         </Section>
       )}
       {popular && popular.length > 0 && (
         <Section title="Popular Movies">
           {popular.map(movie => (
-            <span key={movie.id}>{movie.title}</span>
+            <Poster
+              key={movie.id}
+              id={movie.id}
+              imageUrl={movie.poster_path}
+              title={movie.original_title}
+              rating={movie.vote_average}
+              year={movie.release_date.substring(0, 4)}
+              isMovie={true}
+            />
           ))}
         </Section>
       )}
