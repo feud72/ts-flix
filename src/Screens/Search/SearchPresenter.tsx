@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import Section from '../../Components/Section';
-import Loader from '../../Components/Loader';
-import Message from '../../Components/Message';
+import React from "react";
+import styled from "styled-components";
+import Section from "../../Components/Section";
+import Loader from "../../Components/Loader";
+import Message from "../../Components/Message";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -19,19 +19,9 @@ const Input = styled.input`
   width: 100%;
 `;
 
-interface IShow {
-  name: string;
-  id: number;
-}
-
-interface IMovie {
-  id: number;
-  title: string;
-}
-
 interface IProps {
-  movieResults: Array<IMovie>;
-  tvResults: Array<IShow>;
+  movieResults: { title: string; id: number }[];
+  tvResults: { name: string; id: number }[];
   searchTerm: string;
   loading: boolean;
   error: string;
@@ -46,7 +36,7 @@ const Search: React.FC<IProps> = ({
   loading,
   error,
   handleSubmit,
-  updateTerm,
+  updateTerm
 }) => {
   return (
     <Container>

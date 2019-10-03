@@ -1,20 +1,10 @@
-import React from 'react';
-import SearchPresenter from './SearchPresenter';
-import {moviesApi, tvApi} from '../../Api';
-
-interface IShow {
-  name: string;
-  id: number;
-}
-
-interface IMovie {
-  id: number;
-  title: string;
-}
+import React from "react";
+import SearchPresenter from "./SearchPresenter";
+import { moviesApi, tvApi } from "../../Api";
 
 interface IState {
-  movieResults: Array<IMovie>;
-  tvResults: Array<IShow>;
+  movieResults: { title: string; id: number }[];
+  tvResults: { name: string; id: number }[];
   searchTerm: string;
   loading: boolean;
   error: string;
@@ -24,63 +14,63 @@ export default class extends React.Component {
   state: IState = {
     movieResults: [],
     tvResults: [],
-    searchTerm: '',
+    searchTerm: "",
     loading: false,
-    error: "",
+    error: ""
   };
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const {searchTerm} = this.state;
-    if (searchTerm !== '') {
+    const { searchTerm } = this.state;
+    if (searchTerm !== "") {
       this.searchByTerm();
     }
   };
 
   updateTerm = (event: React.FormEvent<HTMLInputElement>): void => {
     const {
-      currentTarget: {value},
+      currentTarget: { value }
     } = event;
     this.setState({
-      searchTerm: value,
+      searchTerm: value
     });
   };
 
   searchByTerm = async () => {
     this.setState({
-      loading: true,
+      loading: true
     });
-    const {searchTerm} = this.state;
+    const { searchTerm } = this.state;
     try {
-			this.setState({
-				error: ""
-			})
+      this.setState({
+        error: ""
+      });
       const {
-        data: {results: movieResults},
+        data: { results: movieResults }
       } = await moviesApi.search(searchTerm);
       const {
-        data: {results: tvResults},
+        data: { results: tvResults }
       } = await tvApi.search(searchTerm);
       this.setState({
         movieResults,
-        tvResults,
+        tvResults
       });
       if (movieResults.length === 0 && tvResults.length === 0) {
         throw Error();
       }
     } catch (e) {
       this.setState({
-        error: "Can't find results.",
+        error: "Can't find results."
       });
     } finally {
       this.setState({
-        loading: false,
+        loading: false
       });
     }
   };
 
   render() {
-    const {movieResults, tvResults, searchTerm, loading, error} = this.state;
+    const { movieResults, tvResults, searchTerm, loading, error } = this.state;
     return (
       <SearchPresenter
         movieResults={movieResults}
