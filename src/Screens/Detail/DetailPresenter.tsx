@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import Loader from "../../Components/Loader";
 import Message from "../../Components/Message";
 
@@ -22,6 +23,7 @@ interface IProps {
   result: null | IDetail;
   loading: boolean;
   error: null | string;
+  isMovie: boolean;
 }
 
 const Container = styled.div`
@@ -93,12 +95,27 @@ const Overview = styled.p`
   width: 90%;
 `;
 
-const DetailPresenter: React.FC<IProps> = ({ result, loading, error }) => {
+const DetailPresenter: React.FC<IProps> = ({
+  result,
+  loading,
+  error,
+  isMovie
+}) => {
   return loading ? (
-    <Loader />
+    <>
+      <Helmet>
+        <title>Loading | TSflix</title>
+      </Helmet>
+      <Loader />
+    </>
   ) : (
     result && (
       <Container>
+        <Helmet>
+          <title>
+            {isMovie ? result.original_title : result.original_name} | TSflix
+          </title>
+        </Helmet>
         <Backdrop
           bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
         />
@@ -112,9 +129,7 @@ const DetailPresenter: React.FC<IProps> = ({ result, loading, error }) => {
           />
           <Data>
             <Title>
-              {result.original_title
-                ? result.original_title
-                : result.original_name}{" "}
+              {isMovie ? result.original_title : result.original_name}{" "}
               {result.imdb_id && (
                 <a
                   href={`https://imdb.com/title/${result.imdb_id}`}
@@ -132,18 +147,18 @@ const DetailPresenter: React.FC<IProps> = ({ result, loading, error }) => {
             </Title>
             <ItemContainer>
               <Item>
-                {result.release_date
-                  ? result.release_date.substring(0, 4)
+                {isMovie
+                  ? result.release_date && result.release_date.substring(0, 4)
                   : result.first_air_date &&
                     result.first_air_date.substring(0, 4)}
               </Item>
               <Divider>|</Divider>
               <Item>
-                {result.runtime || result.episode_run_time
-                  ? `${result.runtime ? result.runtime : ""}${
+                {isMovie
+                  ? `${result.runtime ? result.runtime : ""} min`
+                  : `${
                       result.episode_run_time ? result.episode_run_time[0] : ""
-                    } min`
-                  : "-"}
+                    } min`}
               </Item>
               <Divider>|</Divider>
               <Item>

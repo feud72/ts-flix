@@ -1,11 +1,13 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import Section from "../../Components/Section";
 import Loader from "../../Components/Loader";
 import Message from "../../Components/Message";
+import Poster from "../../Components/Poster";
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 20px;
 `;
 
 const Form = styled.form`
@@ -19,9 +21,28 @@ const Input = styled.input`
   width: 100%;
 `;
 
+interface IShow {
+  name: string;
+  id: number;
+  poster_path: string;
+  original_name: string;
+  vote_average: number;
+  first_air_date: null | string;
+  isMovie: boolean;
+}
+
+interface IMovie {
+  id: number;
+  title: string;
+  poster_path: string;
+  original_title: string;
+  vote_average: number;
+  release_date: string;
+}
+
 interface IProps {
-  movieResults: { title: string; id: number }[];
-  tvResults: { name: string; id: number }[];
+  movieResults: null | Array<IMovie>;
+  tvResults: null | Array<IShow>;
   searchTerm: string;
   loading: boolean;
   error: string;
@@ -40,6 +61,9 @@ const Search: React.FC<IProps> = ({
 }) => {
   return (
     <Container>
+      <Helmet>
+        <title>Search | TSflix</title>
+      </Helmet>
       <Form onSubmit={handleSubmit}>
         <Input
           placeholder="Search Movies or TV Shows..."
@@ -54,15 +78,35 @@ const Search: React.FC<IProps> = ({
           {movieResults && movieResults.length > 0 && (
             <Section title="Movie Results">
               {movieResults.map(movie => (
-                <span key={movie.id}>{movie.title}</span>
+                <Poster
+                  key={movie.id}
+                  id={movie.id}
+                  imageUrl={movie.poster_path}
+                  title={movie.original_title}
+                  rating={movie.vote_average}
+                  year={movie.release_date.substring(0, 4)}
+                  isMovie={true}
+                />
               ))}
             </Section>
           )}
 
           {tvResults && tvResults.length > 0 && (
-            <Section title="Show Results">
+            <Section title="TV Show Results">
               {tvResults.map(show => (
-                <span key={show.id}>{show.name}</span>
+                <Poster
+                  key={show.id}
+                  id={show.id}
+                  imageUrl={show.poster_path}
+                  title={show.original_name}
+                  rating={show.vote_average}
+                  year={
+                    show.first_air_date
+                      ? show.first_air_date.substring(0, 4)
+                      : ""
+                  }
+                  isMovie={false}
+                />
               ))}
             </Section>
           )}

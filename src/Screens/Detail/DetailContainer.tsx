@@ -39,7 +39,9 @@ export default class extends React.Component<IProps, IState> {
       loading: true,
       isMovie: pathname.includes("/movie/")
     };
+    console.log(pathname);
   }
+
   async componentDidMount() {
     const {
       match: {
@@ -48,6 +50,7 @@ export default class extends React.Component<IProps, IState> {
       history: { push }
     } = this.props;
     const { isMovie } = this.state;
+
     const parsedId = parseInt(id);
     if (isNaN(parsedId)) {
       return push("/");
@@ -72,7 +75,14 @@ export default class extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { result, error, loading } = this.state;
-    return <DetailPresenter result={result} error={error} loading={loading} />;
+    const { result, error, loading, isMovie } = this.state;
+    return (
+      <DetailPresenter
+        result={result}
+        error={error}
+        loading={loading}
+        isMovie={isMovie}
+      />
+    );
   }
 }

@@ -2,9 +2,28 @@ import React from "react";
 import SearchPresenter from "./SearchPresenter";
 import { moviesApi, tvApi } from "../../Api";
 
+interface IShow {
+  name: string;
+  id: number;
+  poster_path: string;
+  original_name: string;
+  vote_average: number;
+  first_air_date: string;
+  isMovie: boolean;
+}
+
+interface IMovie {
+  id: number;
+  title: string;
+  poster_path: string;
+  original_title: string;
+  vote_average: number;
+  release_date: string;
+}
+
 interface IState {
-  movieResults: { title: string; id: number }[];
-  tvResults: { name: string; id: number }[];
+  movieResults: null | Array<IMovie>;
+  tvResults: null | Array<IShow>;
   searchTerm: string;
   loading: boolean;
   error: string;
@@ -12,8 +31,8 @@ interface IState {
 
 export default class extends React.Component {
   state: IState = {
-    movieResults: [],
-    tvResults: [],
+    movieResults: null,
+    tvResults: null,
     searchTerm: "",
     loading: false,
     error: ""
